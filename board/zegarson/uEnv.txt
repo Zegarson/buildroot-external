@@ -11,7 +11,7 @@ try_boot_b=if test 0x${BOOT_B_LEFT} -gt 0; then setexpr BOOT_B_LEFT ${BOOT_B_LEF
 boot_rauc_slot=if test "x${BOOT_ORDER}" = "xA B"; then run try_boot_a; run try_boot_b; else run try_boot_b; run try_boot_a; fi
 boot_extlinux=sysboot mmc 0:${distro_bootpart} any ${scriptaddr} /boot/extlinux/extlinux.conf
 bootcmd=run boot_rauc_slot
-bootdelay=1
+bootdelay=3
 console=ttySTM0
 cpu=armv7
 env_check=if env info -p -d -q; then env save; fi
@@ -21,6 +21,5 @@ loadaddr=0xc2000000
 pxefile_addr_r=0xc6200000
 ramdisk_addr_r=0xc6400000
 scriptaddr=0xc6100000
-serverip=192.168.1.1
 soc=stm32mp
-vendor=st
+vendor=zegarson

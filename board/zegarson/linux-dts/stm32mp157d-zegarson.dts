@@ -17,6 +17,9 @@
 #include "stm32mp15-m4-srm.dtsi"
 
 /* USER CODE BEGIN includes */
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/mfd/st,stpmic1.h>
+#include "stm32mp157d-zegarson-scmi.dtsi"
 /* USER CODE END includes */
 
 / {
@@ -37,10 +40,29 @@
 		ranges;
 
 		/* USER CODE BEGIN reserved-memory */
+		gpu_reserved:gpu@d4000000{
+			reg = <0xd4000000 0x4000000>;
+			no-map;
+		};
 		/* USER CODE END reserved-memory */
 	};
 
 	/* USER CODE BEGIN root */
+	vin: vin {
+		compatible = "regulator-fixed";
+		regulator-name = "vin";
+		regulator-min-microvolt = <3700000>;
+		regulator-max-microvolt = <3700000>;
+		regulator-always-on;
+	};
+
+	aliases {
+		serial0 = &uart4;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
 	/* USER CODE END root */
 
 	clocks{
@@ -479,6 +501,7 @@
 	status = "okay";
 
 	/* USER CODE BEGIN gpu */
+	contiguous-area = <&gpu_reserved>;
 	/* USER CODE END gpu */
 };
 
@@ -496,6 +519,148 @@
 	status = "okay";
 
 	/* USER CODE BEGIN i2c4 */
+	i2c-scl-rising-time-ns = <185>;	
+	i2c-scl-falling-time-ns = <20>;
+	clock-frequency = <400000>;
+	/delete-property/ dmas;
+	/delete-property/ dma-names;
+
+	pmic: stpmic@33 {
+		compatible = "st,stpmic1";
+		reg = <0x33>;
+		interrupts-extended = <&exti 55 IRQ_TYPE_EDGE_FALLING>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		status = "okay";
+
+		regulators {
+			compatible = "st,stpmic1-regulators";
+			buck1-supply = <&vin>;
+			buck2-supply = <&vin>;
+			buck3-supply = <&vin>;
+			buck4-supply = <&vin>;
+			ldo1-supply = <&v3v3>;
+			ldo2-supply = <&v3v3>;
+			ldo3-supply = <&vdd>;
+			ldo4-supply = <&vin>;
+			ldo5-supply = <&v3v3>;
+			ldo6-supply = <&v3v3>;
+			vref_ddr-supply = <&vin>;
+			boost-supply = <&vin>;
+			pwr_sw1-supply = <&bst_out>;
+			pwr_sw2-supply = <&bst_out>;
+
+
+			vddcore: buck1 {
+				regulator-name = "vddcore";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1200000>;
+				regulator-always-on;
+				regulator-initial-mode = <0>;
+				regulator-over-current-protection;
+			};
+
+
+			vdd2_ddr: buck2 {
+				regulator-name = "vdd2_ddr";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1200000>;
+				regulator-always-on;
+				regulator-initial-mode = <0>;
+				regulator-over-current-protection;
+			};
+
+
+			vdd: buck3 {
+				regulator-name = "vdd";
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				regulator-always-on;
+				st,mask-reset;
+				regulator-initial-mode = <0>;
+				regulator-over-current-protection;
+			};
+
+
+			v3v3: buck4 {
+				regulator-name = "v3v3";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+				regulator-over-current-protection;
+				regulator-initial-mode = <0>;
+			};
+
+
+			ldo1_unused: ldo1 {
+				regulator-name = "ldo1_unused";
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				regulator-always-on;
+			};
+
+
+			v2v9_sd: ldo2 {
+				regulator-name = "v2v9_sd";
+				regulator-min-microvolt = <2900000>;
+				regulator-max-microvolt = <2900000>;
+				regulator-always-on;
+			};
+
+
+			vdd1_ddr: ldo3 {
+				regulator-name = "vdd1_ddr";
+				regulator-always-on;
+				regulator-over-current-protection;
+				st,regulator-bypass;
+			};
+
+
+			vdd_usb: ldo4 {
+				regulator-name = "vdd_usb";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+			};
+
+
+			v2v9_emmc: ldo5 {
+				regulator-name = "v2v9_emmc";
+				regulator-min-microvolt = <2900000>;
+				regulator-max-microvolt = <2900000>;
+				regulator-always-on;
+			};
+
+
+			ldo6_unused: ldo6 {
+				regulator-name = "ldo6_unused";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1200000>;
+				regulator-always-on;
+			};
+
+
+			vref_ddr: vref_ddr {
+				regulator-name = "vref_ddr";
+				regulator-always-on;
+			};
+
+
+			bst_out: boost {
+				regulator-name = "bst_out";
+			};
+
+
+			vbus_otg: pwr_sw1 {
+				regulator-name = "vbus_otg";
+			};
+
+
+			vbus_sw: pwr_sw2 {
+				regulator-name = "vbus_sw";
+				regulator-active-discharge = <1>;
+			};
+		};
+	};
 	/* USER CODE END i2c4 */
 };
 
@@ -544,6 +709,8 @@
 	status = "okay";
 
 	/* USER CODE BEGIN pwr_regulators */
+	vdd-supply = <&vdd>;
+	vdd_3v3_usbfs-supply = <&vdd_usb>;
 	/* USER CODE END pwr_regulators */
 };
 
@@ -589,6 +756,11 @@
 	status = "okay";
 
 	/* USER CODE BEGIN sdmmc1 */
+	broken-cd;
+	disable-wp;
+	st,neg-edge;
+	bus-width = <4>;
+	vmmc-supply = <&v2v9_sd>;
 	/* USER CODE END sdmmc1 */
 };
 
@@ -600,6 +772,10 @@
 	status = "okay";
 
 	/* USER CODE BEGIN sdmmc2 */
+	disable-wp;
+	st,neg-edge;
+	bus-width = <8>;
+	vmmc-supply = <&v2v9_emmc>;
 	/* USER CODE END sdmmc2 */
 };
 
@@ -639,6 +815,8 @@
 	status = "okay";
 
 	/* USER CODE BEGIN uart4 */
+	/delete-property/ dmas;
+	/delete-property/ dma-names;
 	/* USER CODE END uart4 */
 };
 
@@ -696,5 +874,31 @@
 };
 
 /* USER CODE BEGIN addons */
+&arm_wdt{
+	timeout-sec = <32>;
+	status = "okay";
+};
+
+&cpu0{
+	cpu-supply = <&vddcore>;
+};
+
+&cpu1{
+	cpu-supply = <&vddcore>;
+};
+
+&dts{
+	status = "okay";
+
+	/* USER CODE BEGIN dts */
+	/* USER CODE END dts */
+};
+
+&hash1{
+	status = "okay";
+
+	/* USER CODE BEGIN hash1 */
+	/* USER CODE END hash1 */
+};
 /* USER CODE END addons */
 

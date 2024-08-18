@@ -1,0 +1,3 @@
+[submodule "board/st/zegarson/dts"]
+	path = board/st/zegarson/dts
+	url = https://github.com/Zegarson/dts

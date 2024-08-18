@@ -1,3 +1,18 @@
+add_wifi_fw_symlinks()
+{
+	if ! grep -q "^BR2_PACKAGE_LINUX_FIRMWARE=y" ${BR2_CONFIG}; then
+		return
+	fi
+
+	pushd ${TARGET_DIR}/lib/firmware/brcm
+		
+	ln -sf brcmfmac43439-sdio.bin brcmfmac43439-sdio.st,${board}-mx.bin
+	ln -sf brcmfmac43439-sdio.1YN.txt brcmfmac43439-sdio.st,${board}-mx.1YN.txt
+	ln -sf brcmfmac43439-sdio.1YN.clm_blob brcmfmac43439-sdio.st,${board}-mx.1YN.clm_blob
+
+	popd
+}
+
 set_rauc_info()
 {
 	local DTB_NAME="$(sed -n 's/^BR2_LINUX_KERNEL_INTREE_DTS_NAME="\(.*\)"$/\1/p' ${BR2_CONFIG} | cut -d'.' -f1)"
@@ -20,5 +35,6 @@ create_data_dir()
 	fi
 }
 
+add_wifi_fw_symlinks $@
 set_rauc_info $@
 create_data_dir $@

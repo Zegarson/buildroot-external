@@ -5,10 +5,12 @@ add_wifi_fw_symlinks()
 	fi
 
 	pushd ${TARGET_DIR}/lib/firmware/brcm
-		
-	ln -sf brcmfmac43439-sdio.bin brcmfmac43439-sdio.st,${board}-mx.bin
-	ln -sf brcmfmac43439-sdio.1YN.txt brcmfmac43439-sdio.st,${board}-mx.1YN.txt
-	ln -sf brcmfmac43439-sdio.1YN.clm_blob brcmfmac43439-sdio.st,${board}-mx.1YN.clm_blob
+
+	for board in stm32mp157d-zegarson; do
+		ln -sf brcmfmac43439-sdio.bin brcmfmac43439-sdio.st,${board}-mx.bin
+		ln -sf brcmfmac43439-sdio.txt brcmfmac43439-sdio.st,${board}-mx.txt
+		ln -sf brcmfmac43439-sdio.clm_blob brcmfmac43439-sdio.st,${board}-mx.clm_blob
+	done
 
 	popd
 }

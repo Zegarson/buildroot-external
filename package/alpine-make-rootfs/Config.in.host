@@ -1,0 +1,6 @@
+config BR2_PACKAGE_HOST_ALPINE_MAKE_ROOTFS
+	bool "host alpine-make-rootfs"
+	help
+	  Make customized Alpine Linux rootfs (base image).
+
+	  https://github.com/alpinelinux/alpine-make-rootfs

@@ -1,0 +1,5 @@
+config BR2_PACKAGE_HOST_IAMROOT
+	bool "host iamroot"
+	select BR2_PACKAGE_HOST_PATCHELF
+	help
+	  iamroot(7) emulates privileged syscalls such as chroot(2) for unprivileged processes in userspace.

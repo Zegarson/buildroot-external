@@ -55,7 +55,7 @@ SKELETON_ALPINELINUX_ENV += APK_OPTS="--arch $(SKELETON_ALPINELINUX_ARCH)"
 
 define SKELETON_ALPINELINUX_BUILD_CMDS
 	mkdir -p $(@D)/rootfs/
-	(  cd $(@D) && $(TARGET_MAKE_ENV) $(SKELETON_ALPINELINUX_ENV) sudo alpine-make-rootfs --packages '$(SKELETON_ALPINELINUX_PACKAGES)' $(@D)/rootfs )
+	( cd $(@D) && $(TARGET_MAKE_ENV) $(SKELETON_ALPINELINUX_ENV) sudo alpine-make-rootfs --packages "$(SKELETON_ALPINELINUX_PACKAGES)" $(@D)/rootfs )
 endef
 
 define SKELETON_ALPINELINUX_INSTALL_TARGET_CMDS

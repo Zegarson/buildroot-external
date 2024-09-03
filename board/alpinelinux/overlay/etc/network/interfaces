@@ -1,0 +1,4 @@
+set -x
+
+auto lo
+iface lo inet loopback

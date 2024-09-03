@@ -1,14 +1,3 @@
-#!/bin/bash
-#
-#  SPDX-License-Identifier: GPL-2.0+
-#
-#  This file is part of linux-distros-br2-external.
-#
-#  linux-distros-br2-external is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2.0 of the License, or (at your
-#  option) any later version.
-
 set -e
 
 config_isset() {
@@ -60,8 +49,8 @@ then
 	fi
 	echo "$hostname" >"$TARGET_DIR/etc/hostname"
 	sed -e "\$a \127.0.1.1\t${hostnames[*]}" \
-	    -e '/^127.0.1.1/d' \
-	    -i "$TARGET_DIR/etc/hosts"
+		-e '/^127.0.1.1/d' \
+		-i "$TARGET_DIR/etc/hosts"
 fi
 
 issue="$(config_string "BR2_TARGET_GENERIC_ISSUE")"

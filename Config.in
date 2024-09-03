@@ -1,4 +1,4 @@
-source "$BR2_EXTERNAL_ZEGARSON_PATH/package/skeleton-alpinelinux/Config.in.options"
+source "$BR2_EXTERNAL_ZEGARSON_PATH/package/skeleton-alpinelinux/Config.in"
 
 menu "System configuration"
 

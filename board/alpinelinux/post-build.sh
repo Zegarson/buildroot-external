@@ -111,6 +111,11 @@ then
 	ln -sf /etc/init.d/udev-trigger "$TARGET_DIR/etc/runlevels/sysinit/"
 fi
 
+if grep -q "^f:" "$TARGET_DIR/lib/apk/db/installed"
+then
+	ln -sf /etc/init.d/apk-fix "$TARGET_DIR/etc/runlevels/default/"
+fi
+
 if [[ -e "$TARGET_DIR/etc/init.d/dbus" ]]
 then
 	ln -sf /etc/init.d/dbus "$TARGET_DIR/etc/runlevels/default/"

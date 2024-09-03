@@ -1,6 +1,0 @@
-config BR2_PACKAGE_HOST_APK_TOOLS
-	bool "host apk-tools"
-	help
-	  Alpine Package Keeper - package manager for alpine.
-
-	  https://github.com/alpinelinux/apk-tools

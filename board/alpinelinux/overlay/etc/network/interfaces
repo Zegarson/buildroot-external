@@ -1,4 +1,5 @@
-set -x
-
 auto lo
 iface lo inet loopback
+
+auto wlan0
+iface wlan0 inet dhcp

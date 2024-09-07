@@ -6,18 +6,6 @@ config BR2_PACKAGE_SKELETON_ALPINELINUX
 	bool
 	depends on BR2_PACKAGE_SKELETON_ALPINELINUX_ARCH_SUPPORTS
 	select BR2_PACKAGE_HAS_SKELETON
-	select BR2_PACKAGE_HOST_ALPINE_MAKE_ROOTFS
-	select BR2_PACKAGE_HOST_APK_TOOLS
 
 config BR2_PACKAGE_PROVIDES_SKELETON
 	default "skeleton-alpinelinux" if BR2_PACKAGE_SKELETON_ALPINELINUX
-
-if BR2_PACKAGE_SKELETON_ALPINELINUX
-
-config BR2_PACKAGE_SKELETON_ALPINELINUX_PACKAGES
-	string "packages"
-	default ""
-	help
-	  Additional packages to install into the rootfs.
-
-endif

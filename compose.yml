@@ -9,4 +9,4 @@ services:
     volumes:
       - ./:/root/buildroot-external:z
       - ../buildroot:/root/buildroot:z
-      - ../dts:/root/dts:z
+      - /tmp/alpine-rootfs:/tmp/alpine-rootfs:z

@@ -92,7 +92,7 @@ GatewayPorts no
 X11Forwarding no
 #X11DisplayOffset 10
 #X11UseLocalhost yes
-#PermitTTY yes
+PermitTTY yes
 #PrintMotd yes
 #PrintLastLog yes
 #TCPKeepAlive yes

@@ -1,0 +1,10 @@
+depend() {
+	need network-online
+	after network-online
+}
+
+start() {
+	if apk fix; then
+		rm -f /etc/runlevels/*/$RC_SVCNAME
+	fi
+}

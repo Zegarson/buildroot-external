@@ -131,4 +131,8 @@ config BR2_SYSTEM_DHCP
 
 endif
 
+config BR2_TARGET_MODULES
+	string "List of modules forced to load on boot"
+	default ""
+
 endmenu

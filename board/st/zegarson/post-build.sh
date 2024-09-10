@@ -15,12 +15,4 @@ add_wifi_fw_symlinks()
 	popd
 }
 
-create_data_dir()
-{
-	if [ ! -d "${TARGET_DIR}/data" ]; then
-		mkdir ${TARGET_DIR}/data
-	fi
-}
-
 add_wifi_fw_symlinks $@
-create_data_dir $@

@@ -4,9 +4,11 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
+    privileged: true
     stdin_open: true
     tty: true
     volumes:
       - ./:/root/buildroot-external:z
       - ../buildroot:/root/buildroot:z
-      - /tmp/alpine-rootfs:/tmp/alpine-rootfs:z
+      - /tmp:/tmp:z
+      - /var/run/docker.sock:/var/run/docker.sock:z

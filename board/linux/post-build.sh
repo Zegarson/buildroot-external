@@ -54,13 +54,3 @@ if [[ "$issue" ]]
 then
 	echo -e "$issue" >"$TARGET_DIR/etc/issue"
 fi
-
-# MODULES
-if config_isset "BR2_TARGET_MODULES"
-then
-	IFS=',' read -ra modules <<< "$BR2_TARGET_MODULES"
-
-	for module in "${modules[@]}"; do
-		grep -Fxq "$module" /etc/modules || echo "$module" >> /etc/modules
-	done
-fi

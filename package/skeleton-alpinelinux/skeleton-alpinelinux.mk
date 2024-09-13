@@ -33,14 +33,13 @@ define SKELETON_ALPINELINUX_BUILD_CMDS
 	@echo "Creating initial chroot environment in Docker..."
 	docker exec $(CONTAINER_NAME) sh -c '\
 		apk update && \
-		apk add alpine-base openrc shadow bash wpa_supplicant openssh linux-firmware-brcm libdrm util-linux nano git u-boot-tools openntpd && \
+		apk add alpine-base openrc shadow bash wpa_supplicant openssh linux-firmware-brcm libdrm util-linux nano git u-boot-tools openntpd e2fsprogs-extra && \
 		chsh -s /bin/bash root'
 
 	@echo "Copying files and setting permissions in Docker..."
 	docker exec $(CONTAINER_NAME) sh -c '\
 		for d in bin etc lib root sbin usr; do tar c "$$d" | tar x -C /alpine-rootfs; done && \
-		for dir in dev proc run sys var; do mkdir -p /alpine-rootfs/$$dir; done && \
-		chmod -R 777 /alpine-rootfs'
+		for dir in dev proc run sys var; do mkdir -p /alpine-rootfs/$$dir; done'
 
 	docker stop $(CONTAINER_NAME)
 endef

@@ -62,7 +62,7 @@ fi
 # INIT SERVICES
 ln -sf /etc/init.d/{modules,sysctl,hostname,bootmisc,syslog,devfs,procfs,sysfs} "$TARGET_DIR/etc/runlevels/boot/"
 ln -sf /etc/init.d/{dmesg,hwdrivers} "$TARGET_DIR/etc/runlevels/sysinit/"
-ln -sf /etc/init.d/{local,wpa_supplicant,networking,wpa_cli,ntpd,sshd} "$TARGET_DIR/etc/runlevels/default/"
+ln -sf /etc/init.d/{local,networking,wpa_cli,ntpd,sshd} "$TARGET_DIR/etc/runlevels/default/"
 ln -sf /etc/init.d/{mount-ro,killprocs,savecache} "$TARGET_DIR/etc/runlevels/shutdown/"
 
 # ADD INIT.D SERVICES

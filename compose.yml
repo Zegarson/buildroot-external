@@ -1,6 +1,6 @@
 services:
   ubuntu-buildroot:
-    image: ubuntu-buildroot/frankoslaw:v1.0.0
+    image: ubuntu-buildroot/frankoslaw:v1.0.2
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -10,5 +10,4 @@ services:
     volumes:
       - ./:/root/buildroot-external:z
       - ../buildroot:/root/buildroot:z
-      - /tmp:/tmp:z
-      - /var/run/docker.sock:/var/run/docker.sock:z
+      - ${HOME}/.buildroot-ccache:/root/.buildroot-ccache:z

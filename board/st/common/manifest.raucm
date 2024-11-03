@@ -6,4 +6,4 @@ version=%RAUC_VERSION%
 format=verity
 
 [image.rootfs]
-filename=rootfs.squashfs
+filename=rootfs.ext4

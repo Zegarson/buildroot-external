@@ -1,6 +1,0 @@
-config BR2_ROOTFS_SKELETON_ALPINELINUX
-	bool "Alpine Linux"
-	select BR2_PACKAGE_SKELETON_ALPINELINUX
-	help
-	  Build the skeleton using the pre-built binary packages and
-	  alpine-make-rootfs.

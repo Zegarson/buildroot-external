@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*_defconfig": "ini"
+    },
+    "prettier.tabWidth": 4,
+    "[c]": {
+        "editor.formatOnSave": false
+    }
+}

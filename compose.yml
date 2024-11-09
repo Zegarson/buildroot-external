@@ -1,13 +1,15 @@
 services:
-  ubuntu-buildroot:
-    image: ubuntu-buildroot/frankoslaw:v1.0.2
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    privileged: true
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./:/root/buildroot-external:z
-      - ../buildroot:/root/buildroot:z
-      - ${HOME}/.buildroot-ccache:/root/.buildroot-ccache:z
+    ubuntu-buildroot:
+        image: ubuntu-buildroot/frankoslaw:v1.0.3
+        build:
+            context: ./
+            dockerfile: ./Dockerfile
+        privileged: true
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./:/root/buildroot-external:z
+            - ../buildroot:/root/buildroot:z
+            - ${HOME}/.buildroot-ccache:/root/.buildroot-ccache:z
+        environment:
+            BR2_EXTERNAL: "../buildroot-external"

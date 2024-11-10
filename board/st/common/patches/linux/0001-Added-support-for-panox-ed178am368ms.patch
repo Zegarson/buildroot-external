@@ -1,14 +1,15 @@
-From 7c39e649f80199ca6531216d985a898bec23a6fd Mon Sep 17 00:00:00 2001
-From: Badzonor <dominik.baronski@gmail.com>
-Date: Sat, 9 Nov 2024 22:40:14 +0100
-Subject: [PATCH] Added support for ED178
+From 751d8719130939293b0c99765004f6c3efbd1784 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Franciszek=20=C5=81opusza=C5=84ski?=
+ <franopusz2006@gmail.com>
+Date: Sun, 10 Nov 2024 00:34:44 +0000
+Subject: [PATCH] Added support for panox ed178am368ms
 
 ---
  drivers/gpu/drm/panel/Kconfig                 |   7 +
  drivers/gpu/drm/panel/Makefile                |   1 +
  .../gpu/drm/panel/panel-panox-ed178am368ms.c  | 312 ++++++++++++++++++
- drivers/gpu/drm/panel/panel-simple.c          |  35 ++
- 4 files changed, 355 insertions(+)
+ drivers/gpu/drm/panel/panel-simple.c          |  34 ++
+ 4 files changed, 354 insertions(+)
  create mode 100644 drivers/gpu/drm/panel/panel-panox-ed178am368ms.c
 
 diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
@@ -28,7 +29,7 @@ index 30f016358..9527caa4d 100644
 +    select VIDEOMODE_HELPERS
  endmenu
 diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index 4d0a07e72..fbeb39daf 100644
+index 4d0a07e72..d37d0ac69 100644
 --- a/drivers/gpu/drm/panel/Makefile
 +++ b/drivers/gpu/drm/panel/Makefile
 @@ -74,3 +74,4 @@ obj-$(CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA) += panel-truly-nt35597.o
@@ -36,6 +37,7 @@ index 4d0a07e72..fbeb39daf 100644
  obj-$(CONFIG_DRM_PANEL_WIDECHIPS_WS2401) += panel-widechips-ws2401.o
  obj-$(CONFIG_DRM_PANEL_XINPENG_XPP055C272) += panel-xinpeng-xpp055c272.o
 +obj-$(CONFIG_DRM_PANEL_PANOX_ED178AM368MS) += panel-panox-ed178am368ms.o
+\ No newline at end of file
 diff --git a/drivers/gpu/drm/panel/panel-panox-ed178am368ms.c b/drivers/gpu/drm/panel/panel-panox-ed178am368ms.c
 new file mode 100644
 index 000000000..a5303e886
@@ -306,7 +308,7 @@ index 000000000..a5303e886
 +
 +	drm_panel_init(&ctx->panel, dev, &panox_ed178am368ms_panel_funcs,
 +				   DRM_MODE_CONNECTOR_DSI);
-+	ctx->panel.prepare_prev_first = true;
++	// ctx->panel.prepare_prev_first = true;
 +
 +	ctx->panel.backlight = panox_ed178am368ms_create_backlight(dsi);
 +	if (IS_ERR(ctx->panel.backlight))
@@ -355,20 +357,10 @@ index 000000000..a5303e886
 +MODULE_DESCRIPTION("DRM driver for panox ed178am368ms (RM69090) command mode dsi panel");
 +MODULE_LICENSE("GPL");
 diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 92401e1f5..ba9908b14 100644
+index 92401e1f5..47420ef6b 100644
 --- a/drivers/gpu/drm/panel/panel-simple.c
 +++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -4352,6 +4352,9 @@ static const struct of_device_id platform_of_match[] = {
- 		.compatible = "yes-optoelectronics,ytc700tlag-05-201c",
- 		.data = &yes_optoelectronics_ytc700tlag_05_201c,
- 	}, {
-+		.compatible = "panox,ed178am368ms",
-+		.data = &panox_ed178am368ms,
-+    }, {
- 		/* Must be the last entry */
- 		.compatible = "panel-dpi",
- 		.data = &panel_dpi,
-@@ -4611,6 +4614,37 @@ static const struct panel_desc_dsi osd101t2045_53ts = {
+@@ -4611,6 +4611,37 @@ static const struct panel_desc_dsi osd101t2045_53ts = {
  	.lanes = 4,
  };
  
@@ -406,14 +398,16 @@ index 92401e1f5..ba9908b14 100644
  static const struct of_device_id dsi_of_match[] = {
  	{
  		.compatible = "auo,b080uan01",
-@@ -4728,6 +4762,7 @@ static void __exit panel_simple_exit(void)
- }
- module_exit(panel_simple_exit);
- 
-+
- MODULE_AUTHOR("Thierry Reding <treding@nvidia.com>");
- MODULE_DESCRIPTION("DRM Driver for Simple Panels");
- MODULE_LICENSE("GPL and additional rights");
+@@ -4633,6 +4664,9 @@ static const struct of_device_id dsi_of_match[] = {
+ 	}, {
+ 		.compatible = "osddisplays,osd101t2045-53ts",
+ 		.data = &osd101t2045_53ts
++	}, {
++		.compatible = "panox,ed178am368ms",
++		.data = &panox_ed178am368ms,
+ 	}, {
+ 		/* sentinel */
+ 	}
 -- 
-2.43.0
+2.34.1
 

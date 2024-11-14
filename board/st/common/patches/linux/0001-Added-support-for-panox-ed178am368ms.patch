@@ -43,7 +43,7 @@ new file mode 100644
 index 000000000..a5303e886
 --- /dev/null
 +++ b/drivers/gpu/drm/panel/panel-panox-ed178am368ms.c
-@@ -0,0 +1,312 @@
+@@ -0,0 +1,314 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +
 +#include <linux/backlight.h>
@@ -340,7 +340,9 @@ index 000000000..a5303e886
 +}
 +
 +static const struct of_device_id panox_ed178am368ms_of_match[] = {
-+	{.compatible = "panox,ed178am368ms"}};
++	{ .compatible = "panox,ed178am368ms", },
++   { /* sentinel */ }
++};
 +MODULE_DEVICE_TABLE(of, panox_ed178am368ms_of_match);
 +
 +static struct mipi_dsi_driver panox_ed178am368ms_driver = {
@@ -355,7 +357,7 @@ index 000000000..a5303e886
 +
 +MODULE_AUTHOR("Franciszek Lopuszanski <franopusz2006@gmail.com>");
 +MODULE_DESCRIPTION("DRM driver for panox ed178am368ms (RM69090) command mode dsi panel");
-+MODULE_LICENSE("GPL");
++MODULE_LICENSE("GPL v2");
 diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
 index 92401e1f5..47420ef6b 100644
 --- a/drivers/gpu/drm/panel/panel-simple.c

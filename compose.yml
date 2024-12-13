@@ -7,9 +7,10 @@ services:
         privileged: true
         stdin_open: true
         tty: true
+        network_mode: host
         volumes:
-            - ./:/root/buildroot-external:z
-            - ../buildroot:/root/buildroot:z
-            - ${HOME}/.buildroot-ccache:/root/.buildroot-ccache:z
+            - ./:/root/buildroot-external
+            - ../buildroot:/root/buildroot
+            - ${HOME}/.buildroot-ccache:/root/.buildroot-ccache
         environment:
             BR2_EXTERNAL: "../buildroot-external"
